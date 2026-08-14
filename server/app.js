@@ -23,7 +23,7 @@ const aiRoutes = require('./routes/aiRoutes');
 
 // Basic route
 app.get('/', (req, res) => {
-    res.send('API is running...');
+    res.json({ success: true, service: "CampusX API" });
 });
 
 // Mount routers
