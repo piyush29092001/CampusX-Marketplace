@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  html,
+  body,
+  #root {
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-background text-on-background font-body-md min-h-screen selection:bg-primary selection:text-on-primary;
+  }
+}
+
+@layer utilities {
+  .grid-pattern {
+    background-image: radial-gradient(#777587 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .dotted-grid {
+    background-image: radial-gradient(#c7c4d8 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .hard-shadow {
+    transition: all 0.2s ease;
+  }
+
+  .hard-shadow:hover {
+    box-shadow: 4px 4px 0px 0px #17172A;
+    transform: translate(-4px, -4px);
+  }
+
+  .shadow-hard {
+    box-shadow: 4px 4px 0px 0px #1b1b24;
+  }
+
+  .border-technical {
+    border: 1px solid #17172A;
+  }
+
+  .border-b-technical {
+    border-bottom: 1px solid #17172A;
+  }
+
+  .border-t-technical {
+    border-top: 1px solid #17172A;
+  }
+
+  .border-r-technical {
+    border-right: 1px solid #17172A;
+  }
+
+  .border-l-technical {
+    border-left: 1px solid #17172A;
+  }
+
+  .blinking-cursor::after {
+    content: '_';
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .terminal-input {
+    background-color: transparent;
+    border: 1px solid #17172A;
+    color: #1b1b24;
+    outline: none;
+  }
+
+  .terminal-input:focus {
+    border-color: #4038d8;
+    box-shadow: none;
+  }
+}

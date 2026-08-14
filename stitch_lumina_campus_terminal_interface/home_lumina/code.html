@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LUMINA_ - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline": "#777587",
+                      "surface-container": "#efecf9",
+                      "on-primary-fixed-variant": "#3124cb",
+                      "on-secondary-fixed-variant": "#3c389d",
+                      "on-tertiary-fixed-variant": "#812800",
+                      "secondary-fixed": "#e2dfff",
+                      "surface-container-lowest": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "surface-container-highest": "#e4e1ee",
+                      "tertiary-fixed-dim": "#ffb59b",
+                      "error": "#ba1a1a",
+                      "surface": "#fcf8ff",
+                      "on-primary-fixed": "#0c006a",
+                      "surface-dim": "#dbd8e5",
+                      "on-background": "#1b1b24",
+                      "primary-fixed-dim": "#c2c1ff",
+                      "primary": "#250fc2",
+                      "on-secondary-fixed": "#0e006a",
+                      "tertiary": "#712200",
+                      "on-secondary-container": "#2c268d",
+                      "tertiary-container": "#983100",
+                      "primary-fixed": "#e2dfff",
+                      "surface-bright": "#fcf8ff",
+                      "surface-variant": "#e4e1ee",
+                      "on-tertiary-fixed": "#380d00",
+                      "secondary-fixed-dim": "#c3c0ff",
+                      "primary-container": "#4038d8",
+                      "on-secondary": "#ffffff",
+                      "on-surface": "#1b1b24",
+                      "inverse-primary": "#c2c1ff",
+                      "background": "#fcf8ff",
+                      "inverse-surface": "#302f39",
+                      "on-error": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "on-primary-container": "#c5c3ff",
+                      "secondary-container": "#9795fe",
+                      "surface-container-low": "#f5f2ff",
+                      "outline-variant": "#c7c4d8",
+                      "surface-container-high": "#eae6f3",
+                      "error-container": "#ffdad6",
+                      "inverse-on-surface": "#f2effc",
+                      "secondary": "#5452b6",
+                      "surface-tint": "#4b45e2",
+                      "on-surface-variant": "#464555",
+                      "on-tertiary-container": "#ffb8a0",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-fixed": "#ffdbcf"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-max": "1280px",
+                      "gutter": "24px",
+                      "margin-desktop": "48px",
+                      "margin-mobile": "16px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Space Mono"
+                      ],
+                      "label-caps": [
+                              "Space Mono"
+                      ],
+                      "headline-sm": [
+                              "Space Mono"
+                      ],
+                      "metadata": [
+                              "Space Mono"
+                      ],
+                      "body-lg": [
+                              "Space Mono"
+                      ],
+                      "headline-lg": [
+                              "Space Mono"
+                      ],
+                      "body-md": [
+                              "Space Mono"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.0",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-sm": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "metadata": [
+                              "11px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .dotted-grid {
+            background-image: radial-gradient(#c7c4d8 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .dotted-grid-dark {
+            background-image: radial-gradient(#17172A 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .hard-shadow:hover {
+            box-shadow: 4px 4px 0px 0px #17172A;
+            transform: translate(-4px, -4px);
+        }
+        .border-technical {
+            border: 1px solid #17172A;
+        }
+        .border-b-technical {
+            border-bottom: 1px solid #17172A;
+        }
+        .border-t-technical {
+            border-top: 1px solid #17172A;
+        }
+        .border-r-technical {
+            border-right: 1px solid #17172A;
+        }
+        .border-l-technical {
+            border-left: 1px solid #17172A;
+        }
+        .blinking-cursor::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen dotted-grid selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar (Rendered as requested by rule 1. JSON Authority) -->
+<header class="bg-surface border-b-technical docked full-width top-0 z-50 sticky">
+<div class="flex justify-between items-center w-full px-margin-desktop h-16 max-w-container-max mx-auto md:px-margin-desktop px-margin-mobile">
+<div class="flex items-center gap-6">
+<a class="font-headline-lg text-headline-lg text-on-background tracking-tighter hover:text-primary transition-colors duration-100" href="#">LUMINA_</a>
+<div class="hidden md:flex items-center gap-4">
+<div class="relative flex items-center border-technical bg-surface-container-lowest h-8 px-2 min-w-[200px] focus-within:border-primary focus-within:border-[1px] group">
+<span class="font-metadata text-metadata text-outline mr-2">&gt;</span>
+<input class="bg-transparent border-none outline-none font-metadata text-metadata text-on-surface w-full p-0 h-full focus:ring-0 placeholder:text-outline-variant group-focus-within:blinking-cursor" placeholder="QUERY_MARKET..." type="text"/>
+</div>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<!-- Assume Home/Explore intent, no exact match, so inactive style for all -->
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-colors duration-100 px-2 py-1 h-full flex items-center" href="#">BOOKS</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-colors duration-100 px-2 py-1 h-full flex items-center" href="#">LAPTOPS</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-colors duration-100 px-2 py-1 h-full flex items-center" href="#">CYCLES</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-colors duration-100 px-2 py-1 h-full flex items-center" href="#">FURNITURE</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-100 cursor-pointer active:translate-y-px" data-icon="mail"><span class="material-symbols-outlined">mail</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-100 cursor-pointer active:translate-y-px" data-icon="notifications"><span class="material-symbols-outlined">notifications</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-100 cursor-pointer active:translate-y-px" data-icon="account_circle"><span class="material-symbols-outlined">account_circle</span></button>
+</div>
+<button class="bg-primary text-on-primary font-label-caps text-label-caps px-4 py-2 border-technical hover:bg-on-background transition-colors duration-100 cursor-pointer active:translate-y-px flex items-center gap-2">
+                    SELL <span class="w-1 h-1 bg-on-primary block"></span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 flex flex-col gap-gutter">
+<!-- Hero Section -->
+<section class="border-technical bg-surface-container-lowest flex flex-col md:flex-row min-h-[400px] overflow-hidden group">
+<div class="flex-1 p-8 md:p-12 flex flex-col justify-center border-b-technical md:border-b-0 md:border-r-technical relative z-10 bg-surface-container-lowest">
+<div class="font-metadata text-metadata text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">terminal</span>
+                    SYS_INIT // COLLEGE_MARKET_0.9
+                </div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-6 uppercase tracking-tighter">
+                    BUY SMART.<br/>
+                    SELL LOCAL.
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mb-8">
+                    The decentralized, peer-to-peer marketplace engineered for campus utility. High-fidelity trading, zero friction.
+                </p>
+<div class="w-full max-w-lg relative">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+</div>
+<input class="block w-full p-4 pl-10 font-metadata text-metadata text-on-surface border-technical bg-surface-container-lowest focus:ring-0 focus:border-primary focus:border-[1px] placeholder:text-outline-variant outline-none" placeholder="ENTER_SEARCH_QUERY_&gt;" type="text"/>
+<button class="absolute right-0 bottom-0 top-0 px-6 font-label-caps text-label-caps bg-on-background text-surface border-l-technical hover:bg-primary transition-colors flex items-center gap-2" type="submit">
+                        EXECUTE <span class="w-2 h-2 bg-surface inline-block"></span>
+</button>
+</div>
+</div>
+<div class="flex-1 bg-surface-container relative overflow-hidden dotted-grid min-h-[200px] md:min-h-full">
+<!-- Abstract Technical Graphic placeholder -->
+<div class="absolute inset-0 flex items-center justify-center opacity-20">
+<span class="material-symbols-outlined text-[200px] text-primary" style="font-variation-settings: 'FILL' 1;">schema</span>
+</div>
+</div>
+</section>
+<!-- Stats Strip -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-0 border-technical bg-surface-container-lowest">
+<div class="p-6 border-b-technical md:border-b-0 md:border-r-technical flex flex-col justify-between hover:bg-surface-container-low transition-colors group">
+<span class="font-metadata text-metadata text-outline-variant mb-2 block uppercase">Metric_01 // Verified_Students</span>
+<div class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">school</span>
+                    2,481+
+                </div>
+</div>
+<div class="p-6 border-b-technical md:border-b-0 md:border-r-technical flex flex-col justify-between hover:bg-surface-container-low transition-colors group">
+<span class="font-metadata text-metadata text-outline-variant mb-2 block uppercase">Metric_02 // Active_Listings</span>
+<div class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">view_list</span>
+                    1,240+
+                </div>
+</div>
+<div class="p-6 flex flex-col justify-between hover:bg-surface-container-low transition-colors group">
+<span class="font-metadata text-metadata text-outline-variant mb-2 block uppercase">Metric_03 // Successful_Trades</span>
+<div class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">handshake</span>
+                    3,820+
+                </div>
+</div>
+</section>
+<!-- Main Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Categories (4 columns) -->
+<div class="lg:col-span-4 flex flex-col gap-gutter">
+<div class="border-technical bg-surface-container-lowest flex flex-col h-full">
+<div class="p-4 border-b-technical bg-surface-container-low flex justify-between items-center">
+<h2 class="font-label-caps text-label-caps text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">category</span>
+                            INDEX_CATEGORIES
+                        </h2>
+</div>
+<div class="flex flex-col flex-grow">
+<a class="p-4 border-b-technical flex items-center justify-between hover:bg-primary hover:text-on-primary transition-colors group" href="#">
+<span class="font-label-caps text-label-caps text-on-surface group-hover:text-on-primary">BOOKS</span>
+<span class="material-symbols-outlined text-outline group-hover:text-on-primary">arrow_forward</span>
+</a>
+<a class="p-4 border-b-technical flex items-center justify-between hover:bg-primary hover:text-on-primary transition-colors group" href="#">
+<span class="font-label-caps text-label-caps text-on-surface group-hover:text-on-primary">LAPTOPS</span>
+<span class="material-symbols-outlined text-outline group-hover:text-on-primary">arrow_forward</span>
+</a>
+<a class="p-4 border-b-technical flex items-center justify-between hover:bg-primary hover:text-on-primary transition-colors group" href="#">
+<span class="font-label-caps text-label-caps text-on-surface group-hover:text-on-primary">CYCLES</span>
+<span class="material-symbols-outlined text-outline group-hover:text-on-primary">arrow_forward</span>
+</a>
+<a class="p-4 flex items-center justify-between hover:bg-primary hover:text-on-primary transition-colors group flex-grow" href="#">
+<span class="font-label-caps text-label-caps text-on-surface group-hover:text-on-primary">FURNITURE</span>
+<span class="material-symbols-outlined text-outline group-hover:text-on-primary">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Right Column: Trending (8 columns) -->
+<div class="lg:col-span-8 flex flex-col gap-gutter">
+<div class="flex justify-between items-end border-b-technical pb-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">trending_up</span>
+                        LIVE_FEED // TRENDING
+                    </h2>
+<a class="font-metadata text-metadata text-primary hover:underline" href="#">VIEW_ALL &gt;</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-gutter">
+<!-- Product Card 1 -->
+<div class="border-technical bg-surface-container-lowest flex flex-col hard-shadow transition-transform duration-200 cursor-pointer group relative">
+<div class="absolute top-2 right-2 z-10 bg-primary text-on-primary font-metadata text-metadata px-2 py-1 border-technical flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">auto_awesome</span>
+                            GREAT_PRICE
+                        </div>
+<div class="h-48 border-b-technical bg-surface-container flex items-center justify-center p-4 relative overflow-hidden group-hover:bg-surface-variant transition-colors">
+<img class="object-contain h-full w-full mix-blend-multiply" data-alt="A detailed digital rendering of a sleek, dark grey HP Pavilion laptop sitting on a brutalist concrete surface. The scene is lit by harsh, high-contrast studio lighting emphasizing the sharp angles and technical aesthetic of the device. The background is a stark, minimal grid pattern in light mode colors, giving an industrial, utilitarian feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_Ol0MHCPLKsXPiB5MKTLWdHzR-9nesJkC8pGAQ6UrcRmqRLZ0vSPJOnBMmnCrjblcGTt92dgVDAV1e-6gDCPuS6BFfsZvLwV3KrYmcRN1FuC8iFNHLE1AMAvRiLn21aCjNRoMZTTW68kc-wgW0U_cwaqSk30SAh9Zey7EmTkGunNYv5dNNUsd1epcJ1OoazZ_sTrufJBLW5UT9Tto4qHfJWHMGU0FaR-bGHGCWkTwkUmJM-QTSQA1rA"/>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<h3 class="font-body-md text-body-md font-bold text-on-surface line-clamp-1">HP Pavilion 15 (2022) - CS Major Setup</h3>
+<span class="font-label-caps text-label-caps text-primary border-b-2 border-primary">$450</span>
+</div>
+<div class="font-metadata text-metadata text-on-surface-variant flex gap-4">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">timer</span> 2h ago</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span> North Campus</span>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="border-technical bg-surface-container-lowest flex flex-col hard-shadow transition-transform duration-200 cursor-pointer group relative">
+<div class="absolute top-2 right-2 z-10 bg-on-background text-surface font-metadata text-metadata px-2 py-1 border-technical flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">whatshot</span>
+                            HIGH_DEMAND
+                        </div>
+<div class="h-48 border-b-technical bg-surface-container flex items-center justify-center p-4 relative overflow-hidden group-hover:bg-surface-variant transition-colors">
+<img class="object-contain h-full w-full mix-blend-multiply" data-alt="A stack of three thick, academic textbooks on a technical grid background. The top book has 'Introduction to Algorithms' visible on the spine. The lighting is crisp and even, highlighting the bright, primary colors of the book covers against the stark, light-mode utilitarian background. A minimalist, retro-futuristic aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBocEdcjQ5W9t3GvEFxVXugVPyLPERVKLNoQqhFOf0zyIKpxLPE7HKt4UKubsdaCAxqyFVfqSfo4AwqCMWF3yZRdHH7EzKDlj_ZdbYXjiJWLd8SmM_tuJ3S5175VrurkZNTe5_qxz4ijtfm2KVBJcxC5USNIduvoFqAtGSoWanNZ5HGh7NGcpo9bzGcgLHxg_HyjOY0G_mIqZOFSJxJ1bjGeIt2iJN6RP02_qEvkf_KJVm3VNreEXOqxg"/>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<h3 class="font-body-md text-body-md font-bold text-on-surface line-clamp-1">Intro to Algorithms (4th Ed) + Calc Notes</h3>
+<span class="font-label-caps text-label-caps text-primary border-b-2 border-primary">$65</span>
+</div>
+<div class="font-metadata text-metadata text-on-surface-variant flex gap-4">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">timer</span> 5h ago</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span> Main Library</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Trust Section -->
+<section class="border-technical bg-surface-container-lowest mt-8">
+<div class="p-4 border-b-technical bg-on-background text-surface">
+<h2 class="font-label-caps text-label-caps flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+                    SYSTEM_SECURITY_PROTOCOLS
+                </h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-0">
+<div class="p-6 border-b-technical md:border-b-0 md:border-r-technical flex flex-col gap-2 group">
+<div class="w-12 h-12 bg-surface-container border-technical flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors mb-2">
+<span class="material-symbols-outlined">school</span>
+</div>
+<h3 class="font-label-caps text-label-caps text-on-surface">COLLEGE_VERIFIED</h3>
+<p class="font-metadata text-metadata text-on-surface-variant">Exclusive access via .edu email verification. Closed loop trust network.</p>
+</div>
+<div class="p-6 border-b-technical md:border-b-0 md:border-r-technical flex flex-col gap-2 group">
+<div class="w-12 h-12 bg-surface-container border-technical flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors mb-2">
+<span class="material-symbols-outlined">forum</span>
+</div>
+<h3 class="font-label-caps text-label-caps text-on-surface">SECURE_MESSAGING</h3>
+<p class="font-metadata text-metadata text-on-surface-variant">Encrypted peer-to-peer comms. Negotiate safely without exposing personal info.</p>
+</div>
+<div class="p-6 flex flex-col gap-2 group">
+<div class="w-12 h-12 bg-surface-container border-technical flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors mb-2">
+<span class="material-symbols-outlined">map</span>
+</div>
+<h3 class="font-label-caps text-label-caps text-on-surface">LOCAL_MEETUPS</h3>
+<p class="font-metadata text-metadata text-on-surface-variant">Designated safe-zones on campus for physical handoffs and transactions.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-on-background border-t-technical full-width bottom-0 mt-12">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter px-margin-mobile md:px-margin-desktop py-12 w-full max-w-container-max mx-auto">
+<div class="md:col-span-4 flex flex-col gap-4">
+<a class="font-headline-md text-headline-md text-surface underline hover:text-primary-fixed-dim transition-colors" href="#">LUMINA_</a>
+<p class="font-metadata text-metadata text-surface-variant">A decentralized commodity exchange platform.</p>
+<span class="font-metadata text-metadata text-outline mt-4">LUMINA_ 2024</span>
+</div>
+<div class="md:col-span-8 flex flex-wrap gap-x-12 gap-y-6 md:justify-end">
+<a class="text-surface-variant font-label-caps text-label-caps hover:text-primary-fixed-dim transition-colors" href="#">MARKETPLACE</a>
+<a class="text-surface-variant font-label-caps text-label-caps hover:text-primary-fixed-dim transition-colors" href="#">COMPANY</a>
+<a class="text-surface-variant font-label-caps text-label-caps hover:text-primary-fixed-dim transition-colors" href="#">LEGAL</a>
+<a class="text-surface-variant font-label-caps text-label-caps hover:text-primary-fixed-dim transition-colors flex items-center gap-2" href="#">
+<span class="w-2 h-2 rounded-full bg-[#10B981] inline-block animate-pulse"></span>
+                    SYSTEM_STATUS: ONLINE
+                </a>
+</div>
+</div>
+</footer>
+</body></html>

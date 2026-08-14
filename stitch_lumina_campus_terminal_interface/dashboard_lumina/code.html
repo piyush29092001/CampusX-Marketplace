@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LUMINA_ Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#777587",
+                        "surface-container": "#efecf9",
+                        "on-primary-fixed-variant": "#3124cb",
+                        "on-secondary-fixed-variant": "#3c389d",
+                        "on-tertiary-fixed-variant": "#812800",
+                        "secondary-fixed": "#e2dfff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#e4e1ee",
+                        "tertiary-fixed-dim": "#ffb59b",
+                        "error": "#ba1a1a",
+                        "surface": "#fcf8ff",
+                        "on-primary-fixed": "#0c006a",
+                        "surface-dim": "#dbd8e5",
+                        "on-background": "#1b1b24",
+                        "primary-fixed-dim": "#c2c1ff",
+                        "primary": "#250fc2",
+                        "on-secondary-fixed": "#0e006a",
+                        "tertiary": "#712200",
+                        "on-secondary-container": "#2c268d",
+                        "tertiary-container": "#983100",
+                        "primary-fixed": "#e2dfff",
+                        "surface-bright": "#fcf8ff",
+                        "surface-variant": "#e4e1ee",
+                        "on-tertiary-fixed": "#380d00",
+                        "secondary-fixed-dim": "#c3c0ff",
+                        "primary-container": "#4038d8",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#1b1b24",
+                        "inverse-primary": "#c2c1ff",
+                        "background": "#fcf8ff",
+                        "inverse-surface": "#302f39",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#c5c3ff",
+                        "secondary-container": "#9795fe",
+                        "surface-container-low": "#f5f2ff",
+                        "outline-variant": "#c7c4d8",
+                        "surface-container-high": "#eae6f3",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#f2effc",
+                        "secondary": "#5452b6",
+                        "surface-tint": "#4b45e2",
+                        "on-surface-variant": "#464555",
+                        "on-tertiary-container": "#ffb8a0",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#ffdbcf"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "gutter": "24px",
+                        "margin-desktop": "48px",
+                        "margin-mobile": "16px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Space Mono"],
+                        "label-caps": ["Space Mono"],
+                        "headline-sm": ["Space Mono"],
+                        "metadata": ["Space Mono"],
+                        "body-lg": ["Space Mono"],
+                        "headline-lg": ["Space Mono"],
+                        "body-md": ["Space Mono"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "headline-sm": ["18px", { "lineHeight": "1.4", "fontWeight": "700" }],
+                        "metadata": ["11px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .dotted-bg {
+            background-image: radial-gradient(#c7c4d8 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .hard-shadow:hover {
+            box-shadow: 4px 4px 0px 0px #17172A;
+            transform: translate(-2px, -2px);
+            transition: all 0.1s ease-in-out;
+        }
+        .blinking-cursor::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="h-full bg-background text-on-background font-body-md dotted-bg flex flex-col md:flex-row m-0 p-0 overflow-hidden">
+<!-- Mobile TopNav (Replacement for SideNav on mobile as per rules) -->
+<nav class="md:hidden flex justify-between items-center w-full px-margin-mobile h-16 bg-surface border-b border-on-background flex-shrink-0 z-50">
+<div class="font-headline-sm text-headline-sm text-on-background">LUMINA_DASHBOARD</div>
+<button class="text-on-background">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</nav>
+<!-- SideNavBar (Desktop) -->
+<aside class="hidden md:flex flex-col h-screen sticky top-0 p-gutter bg-surface docked left-0 w-64 border-r border-on-background z-40 shrink-0">
+<div class="mb-8">
+<h1 class="font-headline-sm text-headline-sm text-on-background">LUMINA_DASHBOARD</h1>
+<p class="font-metadata text-metadata text-on-surface-variant mt-2">SYSTEM_USER_01</p>
+</div>
+<button class="bg-primary text-on-primary font-label-caps text-label-caps py-3 px-4 mb-8 flex justify-between items-center border border-primary hover:bg-surface-container-highest transition-all duration-75 group rounded-none">
+            NEW_LISTING
+            <span class="bg-on-primary text-primary w-2 h-2 inline-block group-hover:bg-primary transition-colors"></span>
+</button>
+<nav class="flex-1 flex flex-col gap-unit">
+<a class="bg-primary text-on-primary font-label-caps text-label-caps px-4 py-3 flex items-center gap-3 transition-all duration-75" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                OVERVIEW
+            </a>
+<a class="text-on-surface-variant font-label-caps text-label-caps px-4 py-3 flex items-center gap-3 hover:bg-surface-container-highest transition-all duration-75 cursor-pointer active:translate-y-px" href="#">
+<span class="material-symbols-outlined" data-icon="list_alt">list_alt</span>
+                MY_LISTINGS
+            </a>
+<a class="text-on-surface-variant font-label-caps text-label-caps px-4 py-3 flex items-center gap-3 hover:bg-surface-container-highest transition-all duration-75 cursor-pointer active:translate-y-px" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+                MESSAGES
+            </a>
+<a class="text-on-surface-variant font-label-caps text-label-caps px-4 py-3 flex items-center gap-3 hover:bg-surface-container-highest transition-all duration-75 cursor-pointer active:translate-y-px" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+                TRANSACTIONS
+            </a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-unit">
+<a class="text-on-surface-variant font-label-caps text-label-caps px-4 py-3 flex items-center gap-3 hover:bg-surface-container-highest transition-all duration-75 cursor-pointer active:translate-y-px" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                SETTINGS
+            </a>
+<a class="text-on-surface-variant font-label-caps text-label-caps px-4 py-3 flex items-center gap-3 hover:bg-surface-container-highest transition-all duration-75 cursor-pointer active:translate-y-px" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                LOGOUT
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto bg-surface-container-low relative">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12 flex flex-col gap-gutter">
+<header class="flex justify-between items-end border-b border-on-background pb-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-background blinking-cursor tracking-tighter">&gt; SYSTEM_OVERVIEW</h2>
+<p class="font-metadata text-metadata text-on-surface-variant mt-2 uppercase">Runtime Analytics // Live</p>
+</div>
+</header>
+<!-- Metrics Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-surface-container-lowest border border-on-background p-6 hard-shadow flex flex-col justify-between min-h-[160px] rounded-none">
+<div class="flex justify-between items-start">
+<span class="font-metadata text-metadata text-on-surface-variant uppercase tracking-widest">Active Listings</span>
+<span class="material-symbols-outlined text-outline" data-icon="inventory_2">inventory_2</span>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-on-background">12</div>
+<div class="font-label-caps text-label-caps text-primary mt-1">+2 THIS WEEK</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-on-background p-6 hard-shadow flex flex-col justify-between min-h-[160px] rounded-none">
+<div class="flex justify-between items-start">
+<span class="font-metadata text-metadata text-on-surface-variant uppercase tracking-widest">Total Views</span>
+<span class="material-symbols-outlined text-outline" data-icon="visibility">visibility</span>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-on-background">2.4K</div>
+<div class="font-label-caps text-label-caps text-primary mt-1">+18% vs LAST MONTH</div>
+</div>
+</div>
+<div class="bg-primary text-on-primary border border-on-background p-6 hard-shadow flex flex-col justify-between min-h-[160px] rounded-none">
+<div class="flex justify-between items-start">
+<span class="font-metadata text-metadata text-on-primary uppercase tracking-widest opacity-80">Items Sold</span>
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-on-primary">07</div>
+<div class="font-label-caps text-label-caps text-primary-fixed-dim mt-1">LIFETIME</div>
+</div>
+</div>
+</div>
+<!-- Chart Section Placeholder -->
+<div class="bg-surface-container-lowest border border-on-background p-6 hard-shadow mt-4 rounded-none h-80 relative flex flex-col">
+<div class="flex justify-between items-center border-b border-outline-variant pb-4 mb-4">
+<h3 class="font-headline-md text-headline-md text-on-background">PERFORMANCE_MATRIX</h3>
+<div class="flex gap-2">
+<span class="bg-surface text-on-surface-variant border border-outline-variant px-2 py-1 font-metadata text-metadata uppercase cursor-pointer hover:bg-surface-variant transition-colors">1W</span>
+<span class="bg-on-background text-surface px-2 py-1 font-metadata text-metadata uppercase cursor-pointer">1M</span>
+<span class="bg-surface text-on-surface-variant border border-outline-variant px-2 py-1 font-metadata text-metadata uppercase cursor-pointer hover:bg-surface-variant transition-colors">ALL</span>
+</div>
+</div>
+<div class="flex-1 flex items-center justify-center relative overflow-hidden">
+<!-- Abstract Line Chart Representation -->
+<svg class="absolute inset-0 w-full h-full text-outline-variant" preserveaspectratio="none" viewbox="0 0 100 100">
+<path d="M0 80 Q 20 20, 50 60 T 100 10" fill="none" stroke="currentColor" stroke-width="0.5"></path>
+<path d="M0 90 Q 30 70, 60 85 T 100 40" fill="none" stroke="currentColor" stroke-dasharray="1 1" stroke-width="0.2"></path>
+</svg>
+<div class="absolute inset-0 flex flex-col justify-between py-4 pointer-events-none opacity-20">
+<div class="border-t border-on-background w-full"></div>
+<div class="border-t border-on-background w-full"></div>
+<div class="border-t border-on-background w-full"></div>
+<div class="border-t border-on-background w-full"></div>
+</div>
+<span class="font-metadata text-metadata text-on-surface-variant uppercase bg-surface-container-lowest px-2 py-1 z-10 border border-outline-variant">[ DATA RENDER PENDING ]</span>
+</div>
+</div>
+<!-- Recent Transactions -->
+<div class="mt-4">
+<h3 class="font-headline-md text-headline-md text-on-background border-b border-on-background pb-2 mb-6">TRANSACTION_LOG</h3>
+<div class="flex flex-col gap-4">
+<!-- Transaction Item 1 -->
+<div class="bg-surface-container-lowest border border-on-background p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:bg-surface-container-low transition-colors rounded-none group cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-dim border border-on-background flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="laptop_mac">laptop_mac</span>
+</div>
+<div>
+<div class="font-body-lg text-body-lg text-on-background font-bold uppercase">MacBook Pro M1 2020</div>
+<div class="font-metadata text-metadata text-on-surface-variant uppercase">ID: TXN-8932 // BUYER: @STUDENT_X</div>
+</div>
+</div>
+<div class="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end">
+<div class="font-headline-sm text-headline-sm text-on-background">$850.00</div>
+<div class="bg-surface text-on-background border border-on-background px-3 py-1 font-label-caps text-label-caps uppercase flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-tertiary-container rounded-none animate-pulse"></span>
+                                NEGOTIATING
+                            </div>
+</div>
+</div>
+<!-- Transaction Item 2 -->
+<div class="bg-surface-container-lowest border border-on-background p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:bg-surface-container-low transition-colors rounded-none group cursor-pointer opacity-75 hover:opacity-100">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-dim border border-on-background flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="menu_book">menu_book</span>
+</div>
+<div>
+<div class="font-body-lg text-body-lg text-on-background font-bold uppercase">Advanced Calculus 9th Ed</div>
+<div class="font-metadata text-metadata text-on-surface-variant uppercase">ID: TXN-8931 // BUYER: @MATH_NERD</div>
+</div>
+</div>
+<div class="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end">
+<div class="font-headline-sm text-headline-sm text-on-background">$45.00</div>
+<div class="bg-on-background text-surface border border-on-background px-3 py-1 font-label-caps text-label-caps uppercase flex items-center gap-2">
+                                COMPLETED
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile BottomNavBar (Replacement for desktop nav on mobile) -->
+<nav class="md:hidden flex justify-around items-center w-full px-margin-mobile h-16 bg-surface border-t border-on-background flex-shrink-0 z-50 fixed bottom-0">
+<a class="text-primary flex flex-col items-center justify-center w-full h-full border-t-2 border-primary" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+</a>
+<a class="text-on-surface-variant flex flex-col items-center justify-center w-full h-full" href="#">
+<span class="material-symbols-outlined" data-icon="list_alt">list_alt</span>
+</a>
+<a class="text-on-surface-variant flex flex-col items-center justify-center w-full h-full" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+</a>
+</nav>
+<div class="md:hidden h-16 shrink-0"></div> <!-- Spacer for mobile bottom nav -->
+</body></html>
