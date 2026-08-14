@@ -15,7 +15,7 @@ const Login = () => {
         try {
             const result = await signInWithPopup(auth, provider);
             const idToken = await result.user.getIdToken();
-            const res = await fetch('/api/auth/google', {
+            const res = await fetch(import.meta.env.VITE_API_URL + '/api/auth/google', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ idToken })
@@ -49,7 +49,7 @@ const Login = () => {
         e.preventDefault();
         toast.loading('Authenticating...', { id: 'login' });
         try {
-            const res = await fetch('/api/auth/login', {
+            const res = await fetch(import.meta.env.VITE_API_URL + '/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })

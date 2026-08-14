@@ -38,7 +38,7 @@ function App() {
       // Strategy 1: Try restoring from existing JWT
       if (existingToken) {
         try {
-          const res = await fetch('/api/auth/me', {
+          const res = await fetch(import.meta.env.VITE_API_URL + '/api/auth/me', {
             headers: { 'Authorization': `Bearer ${existingToken}` }
           });
           const text = await res.text();
@@ -65,7 +65,7 @@ function App() {
         if (firebaseUser) {
           try {
             const idToken = await firebaseUser.getIdToken(true);
-            const res = await fetch('/api/auth/refresh-session', {
+            const res = await fetch(import.meta.env.VITE_API_URL + '/api/auth/refresh-session', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ firebaseIdToken: idToken })

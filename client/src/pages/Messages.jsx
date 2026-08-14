@@ -105,7 +105,7 @@ const Messages = () => {
         const socket = getSocket(token);
 
         const loadConversations = async () => {
-            const res = await fetch('/api/messages/conversations', {
+            const res = await fetch(import.meta.env.VITE_API_URL + '/api/messages/conversations', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await res.json();
@@ -254,7 +254,7 @@ const Messages = () => {
 
         const fetchHistory = async () => {
             setMessages([]); // Immediately clear old messages when switching chats
-            const res = await fetch(`/api/messages/${activeChatId}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/messages/${activeChatId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await res.json();
@@ -338,7 +338,7 @@ const Messages = () => {
 
     const handleDeleteConversation = async () => {
         try {
-            const res = await fetch(`/api/messages/conversations/${activeChat._id}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/messages/conversations/${activeChat._id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -359,7 +359,7 @@ const Messages = () => {
 
     const handleDeleteMessage = async (msgId) => {
         try {
-            await fetch(`/api/messages/${msgId}`, {
+            await fetch(`${import.meta.env.VITE_API_URL}/api/messages/${msgId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

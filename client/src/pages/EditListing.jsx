@@ -22,7 +22,7 @@ const EditListing = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const res = await fetch(`/api/products/${id}`);
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
                 const data = await res.json();
                 if (data.success) {
                     setProductData({
@@ -97,7 +97,7 @@ const EditListing = () => {
             const payload = { ...productData, price: Number(productData.price) };
             if (payload.images.length === 0) payload.images = ['default'];
 
-            const res = await fetch(`/api/products/${id}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

@@ -4,7 +4,7 @@ let socket = null;
 
 export const getSocket = (token) => {
     if (!socket && token) {
-        socket = io({ auth: { token } });
+        socket = io(import.meta.env.VITE_API_URL, { auth: { token } });
     }
     return socket;
 };

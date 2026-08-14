@@ -20,7 +20,7 @@ const Navbar = () => {
 
         const loadUnread = async () => {
             try {
-                const res = await fetch('/api/messages/conversations', {
+                const res = await fetch(import.meta.env.VITE_API_URL + '/api/messages/conversations', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 const json = await res.json();

@@ -8,7 +8,7 @@ const Home = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/products?limit=2');
+                const res = await fetch(import.meta.env.VITE_API_URL + '/api/products?limit=2');
                 const data = await res.json();
                 if (res.ok && data.success) {
                     setProducts(data.data);

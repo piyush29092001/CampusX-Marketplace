@@ -81,7 +81,7 @@ const Sell = () => {
         }, 500);
 
         try {
-            const res = await fetch('http://localhost:5000/api/ai/analyze-listing', {
+            const res = await fetch(import.meta.env.VITE_API_URL + '/api/ai/analyze-listing', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ...productData, productImages: images })
@@ -142,7 +142,7 @@ const Sell = () => {
                 images: images.length > 0 ? images : ['default']
             };
 
-            const res = await fetch('/api/products', {
+            const res = await fetch(import.meta.env.VITE_API_URL + '/api/products', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

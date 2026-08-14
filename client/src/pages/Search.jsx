@@ -47,7 +47,7 @@ const Search = () => {
         const fetchProducts = async () => {
             setLoading(true);
             try {
-                let url = 'http://localhost:5000/api/products?';
+                let url = import.meta.env.VITE_API_URL + '/api/products?';
                 const params = new URLSearchParams();
 
                 if (activeCategory !== 'ALL') {

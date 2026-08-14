@@ -31,8 +31,8 @@ const Profile = () => {
 
             // Fetch both overview metrics and listings simultaneously
             const [overviewRes, listingsRes] = await Promise.all([
-                fetch('/api/dashboard/overview', { headers: { 'Authorization': `Bearer ${token}` } }),
-                fetch('/api/products/my-listings', { headers: { 'Authorization': `Bearer ${token}` } })
+                fetch(import.meta.env.VITE_API_URL + '/api/dashboard/overview', { headers: { 'Authorization': `Bearer ${token}` } }),
+                fetch(import.meta.env.VITE_API_URL + '/api/products/my-listings', { headers: { 'Authorization': `Bearer ${token}` } })
             ]);
 
             const overviewData = await overviewRes.json();
@@ -55,7 +55,7 @@ const Profile = () => {
     const handleDelete = async (id) => {
         try {
             const token = localStorage.getItem('lumina_token');
-            const res = await fetch(`/api/products/${id}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

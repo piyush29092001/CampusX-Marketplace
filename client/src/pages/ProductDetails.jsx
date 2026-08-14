@@ -18,7 +18,7 @@ const ProductDetails = () => {
                     throw new Error("Invalid Product ID.");
                 }
 
-                const res = await fetch(`/api/products/${id}`);
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
                 const data = await res.json();
                 if (res.ok && data.success) {
                     setProduct(data.data);
@@ -87,7 +87,7 @@ const ProductDetails = () => {
             }
 
             console.log('[PING_SELLER] starting conversation...');
-            const res = await fetch('/api/messages/start', {
+            const res = await fetch(import.meta.env.VITE_API_URL + '/api/messages/start', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -190,7 +190,7 @@ const ProductDetails = () => {
                                             <button onClick={async () => {
                                                 try {
                                                     const token = localStorage.getItem('lumina_token');
-                                                    const res = await fetch(`/api/products/${product._id}`, {
+                                                    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${product._id}`, {
                                                         method: 'DELETE',
                                                         headers: { 'Authorization': `Bearer ${token}` }
                                                     });
