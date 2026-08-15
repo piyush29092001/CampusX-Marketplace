@@ -349,11 +349,12 @@ const Messages = () => {
                 setMessages([]);
                 setConfirmDeleteChat(false);
             } else {
-                alert(data.error || 'Failed to delete conversation');
+                console.error("Delete Chat Rejection:", data.error);
+                alert("We couldn't delete the conversation. Please try again.");
             }
         } catch (e) {
-            console.error(e);
-            alert('Failed to delete conversation — network error');
+            console.error("Delete Chat Exception:", e);
+            alert("Unable to connect to the server. Please try again.");
         }
     };
 
@@ -382,7 +383,7 @@ const Messages = () => {
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
         if (!file) return;
-        if (file.size > 5 * 1024 * 1024) return alert("SIZE FAULT // LIMIT 5MB");
+        if (file.size > 5 * 1024 * 1024) return alert("Please choose an image under 5 MB.");
         const reader = new FileReader();
         reader.onloadend = () => {
             setImagePreview(reader.result);
@@ -401,7 +402,7 @@ const Messages = () => {
         <>
             {/* --- SHARED OVERLAYS --- */}
             {lightboxImage && (
-                <div className="fixed inset-0 z-50 bg-[#17172A]/95 flex items-center justify-center p-4 cursor-pointer" onClick={() => setLightboxImage(null)}>
+                <div className="fixed inset-0 z-[110] bg-[#17172A]/95 flex items-center justify-center p-4 cursor-pointer" onClick={() => setLightboxImage(null)}>
                     <div className="absolute top-4 right-4 text-white hover:text-error transition-colors">
                         <X className="w-8 h-8" />
                     </div>
@@ -410,7 +411,7 @@ const Messages = () => {
             )}
 
             {confirmDeleteChat && (
-                <div className="fixed inset-0 z-[100] bg-[#17172A]/80 flex items-center justify-center p-4" onClick={() => setConfirmDeleteChat(false)}>
+                <div className="fixed inset-0 z-[110] bg-[#17172A]/80 flex items-center justify-center p-4" onClick={() => setConfirmDeleteChat(false)}>
                     <div className="bg-white border-2 border-[#17172A] p-8 shadow-[8px_8px_0_#17172A] max-w-sm w-full text-center" onClick={e => e.stopPropagation()}>
                         <h2 className="font-bold text-xl uppercase mb-2 text-error tracking-tight">DELETE CHAT?</h2>
                         <p className="text-sm font-bold text-[#1b1b24] mb-8">This chat will be deleted from your side only.</p>
@@ -757,7 +758,8 @@ const Messages = () => {
                                                 {chat.lastMessage || '...'}
                                             </p>
                                         </div>
-                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-[#250fc2]">
+                                        <div className={`absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 ${unread > 0 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} transition-opacity text-[#250fc2]`}>
+                                            {unread > 0 && <div className="w-6 h-6 border border-[#17172A] bg-[#250fc2] text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">+{unread}</div>}
                                             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}>chevron_right</span>
                                         </div>
                                     </button>
@@ -812,11 +814,20 @@ const Messages = () => {
                                 msg.sender === myId ? (
                                     // My message (Mobile)
                                     <div key={msg._id || i} className="flex flex-col items-end max-w-[85%] self-end">
-                                        <div className="flex items-center gap-2 mb-1">
+                                        <div className="flex items-center gap-2 mb-1 relative">
                                             {!msg.deletedForEveryone && (
                                                 <div className="flex space-x-1 border border-[#17172A] bg-white px-1">
                                                     <button onClick={() => setReplyingTo(msg)} className="text-[#464555] p-0.5 hover:text-[#250fc2]"><Reply className="w-3 h-3" /></button>
                                                     <button onClick={() => setConfirmDeleteMsg(confirmDeleteMsg === msg._id ? null : msg._id)} className="text-[#464555] p-0.5 hover:text-error"><Trash2 className="w-3 h-3" /></button>
+                                                </div>
+                                            )}
+                                            {confirmDeleteMsg === msg._id && (
+                                                <div className="absolute top-0 right-full mr-2 bg-white border border-[#17172A] p-3 shadow-[2px_2px_0_#17172A] z-[70] w-48 text-center flex-col space-y-2">
+                                                    <p className="font-bold text-[10px] uppercase text-error">DELETE FOR EVERYONE?</p>
+                                                    <div className="flex space-x-2">
+                                                        <button onClick={() => setConfirmDeleteMsg(null)} className="flex-1 p-1 border border-[#17172A] text-[9px] font-bold uppercase bg-white hover:bg-[#f5f2ff]">CANCEL</button>
+                                                        <button onClick={() => handleDeleteMessage(msg._id)} className="flex-1 p-1 border border-[#17172A] bg-error text-white text-[9px] font-bold uppercase hover:bg-red-800">DELETE</button>
+                                                    </div>
                                                 </div>
                                             )}
                                             <span className="text-[11px] text-[#464555] uppercase font-bold">YOU [{new Date(msg.createdAt).toLocaleTimeString([], { timeStyle: 'short' })}]</span>

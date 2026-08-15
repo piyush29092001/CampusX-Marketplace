@@ -4,15 +4,19 @@ const sendEmail = async (options) => {
     // Requires process.env.RESEND_API_KEY
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const { email, otp } = options;
+    const { email, otp, subject, text, html } = options;
+
+    const defaultSubject = 'LUMINA_ Email Verification';
+    const defaultText = `LUMINA_ Email Verification\n\nYour verification code is:\n\n${otp}\n\nThis code expires in 10 minutes.\n\nIf you did not create this account, ignore this email.`;
+    const defaultHtml = `<p>LUMINA_ Email Verification</p><p>Your verification code is: <strong>${otp}</strong></p><p>This code expires in 10 minutes.</p><p>If you did not create this account, ignore this email.</p>`;
 
     try {
         const data = await resend.emails.send({
             from: process.env.RESEND_FROM_EMAIL || 'LUMINA <onboarding@resend.dev>',
             to: [email],
-            subject: 'LUMINA_ Email Verification',
-            text: `LUMINA_ Email Verification\n\nYour verification code is:\n\n${otp}\n\nThis code expires in 10 minutes.\n\nIf you did not create this account, ignore this email.`,
-            html: `<p>LUMINA_ Email Verification</p><p>Your verification code is: <strong>${otp}</strong></p><p>This code expires in 10 minutes.</p><p>If you did not create this account, ignore this email.</p>`
+            subject: subject || defaultSubject,
+            text: text || defaultText,
+            html: html || defaultHtml
         });
 
         if (data.error) {

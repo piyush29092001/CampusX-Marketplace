@@ -9,8 +9,8 @@ const BottomNav = () => {
     const isActive = (path) => location.pathname === path;
 
     return (
-        <nav className="fixed bottom-0 left-0 w-full bg-surface border-t border-on-background z-50 md:hidden">
-            <div className="flex justify-between items-center w-full px-4 h-16">
+        <nav className="fixed bottom-0 left-0 w-full bg-surface border-t border-on-background z-[60] md:hidden pb-[env(safe-area-inset-bottom)]">
+            <div className="flex justify-between items-center w-full px-4 h-[64px]">
                 <Link to="/profile" className={`flex flex-col items-center justify-center w-1/4 h-full ${isActive('/profile') ? 'text-primary border-t-2 border-primary' : 'text-on-surface-variant hover:text-primary transition-colors'}`}>
                     <span className="material-symbols-outlined mb-1" style={{ fontVariationSettings: isActive('/profile') ? "'FILL' 1" : "'FILL' 0" }}>dashboard</span>
                     <span className="font-label-caps text-[10px]">OVERVIEW</span>
@@ -22,7 +22,11 @@ const BottomNav = () => {
                 <Link to="/messages" className={`flex flex-col items-center justify-center w-1/4 h-full relative ${isActive('/messages') ? 'text-primary border-t-2 border-primary' : 'text-on-surface-variant hover:text-primary transition-colors'}`}>
                     <span className="material-symbols-outlined mb-1" style={{ fontVariationSettings: isActive('/messages') ? "'FILL' 1" : "'FILL' 0" }}>forum</span>
                     <span className="font-label-caps text-[10px]">MESSAGES</span>
-                    {/* Placeholder for unread dot if needed */}
+                    {globalUnread > 0 && (
+                        <span className="absolute top-1 right-[25%] bg-error text-on-error text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-surface">
+                            {globalUnread > 9 ? '9+' : globalUnread}
+                        </span>
+                    )}
                 </Link>
                 <Link to="/sell" className={`flex flex-col items-center justify-center w-1/4 h-full ${isActive('/sell') ? 'text-primary border-t-2 border-primary' : 'text-on-surface-variant hover:text-primary transition-colors'}`}>
                     <span className="material-symbols-outlined mb-1" style={{ fontVariationSettings: isActive('/sell') ? "'FILL' 1" : "'FILL' 0" }}>add_box</span>

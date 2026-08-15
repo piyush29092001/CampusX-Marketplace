@@ -34,11 +34,13 @@ const EditListing = () => {
                         images: data.data.images || []
                     });
                 } else {
-                    alert('Error loading product');
+                    console.error("Product Load Rejection:", data.error);
+                    alert("We couldn't load this listing. Please try again.");
                     navigate('/');
                 }
             } catch (err) {
-                alert('Connection error');
+                console.error("Product Load Exception:", err);
+                alert("Unable to connect to the server. Please try again.");
                 navigate('/');
             } finally {
                 setLoading(false);
@@ -110,10 +112,12 @@ const EditListing = () => {
                 alert('LISTING UPDATED ✓');
                 navigate(`/product/${id}`);
             } else {
-                alert(data.error || 'Failed to update listing');
+                console.error("Listing Update Rejection:", data.error);
+                alert("We couldn't update your listing. Please try again.");
             }
         } catch (err) {
-            alert('Failed to communicate with server');
+            console.error("Listing Update Exception:", err);
+            alert("Unable to connect to the server. Please check your connection and try again.");
         }
     };
 

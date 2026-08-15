@@ -17,6 +17,9 @@ const useStore = create((set) => ({
         set({ user });
     },
 
+    globalUnread: 0,
+    setGlobalUnread: (val) => set({ globalUnread: val }),
+
     setAuthLoading: (loading) => {
         set({ authLoading: loading });
     },

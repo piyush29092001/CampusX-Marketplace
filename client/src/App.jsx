@@ -106,9 +106,9 @@ function App() {
 
   return (
     <Router>
-      <div className={`min-h-screen bg-surface text-on-surface font-body-md relative pb-16 md:pb-0`}>
+      <div className={`min-h-[100dvh] flex flex-col bg-surface text-on-surface font-body-md relative pt-[64px] md:pt-0 pb-[calc(64px+env(safe-area-inset-bottom))] md:pb-0`}>
         <Navbar />
-        <main className="w-full relative">
+        <main className="w-full relative flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<Search />} />

@@ -81,7 +81,7 @@ export default function ImageCropModal({ imageSrc, onCropComplete, onClose }) {
 
         } catch (e) {
             console.error(e);
-            alert('Error cropping image. Please try again.');
+            alert("We couldn't process this image. Please try another one.");
         } finally {
             setProcessing(false);
         }

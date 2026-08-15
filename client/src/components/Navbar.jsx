@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { getSocket } from '../services/socket';
+import useStore from '../store/useStore';
 
 const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [globalUnread, setGlobalUnread] = useState(0);
+    const { globalUnread, setGlobalUnread } = useStore();
 
     const showAuthNav = location.pathname !== '/login';
 
@@ -44,16 +45,40 @@ const Navbar = () => {
             loadUnread();
         };
 
+        const handleNewMessageToast = (msg) => {
+            if (window.location.pathname !== '/messages') {
+                import('react-hot-toast').then(({ default: toast }) => {
+                    toast.success('New message received!', {
+                        style: {
+                            border: '1px solid #17172A',
+                            padding: '16px',
+                            color: '#1b1b24',
+                            background: '#fff',
+                            borderRadius: '0px',
+                            boxShadow: '4px 4px 0 #17172A',
+                            fontFamily: 'monospace'
+                        },
+                        iconTheme: {
+                            primary: '#250fc2',
+                            secondary: '#fff',
+                        },
+                    });
+                });
+            }
+        };
+
         socket.on('conversation_updated', handleConvoUpdate);
+        socket.on('new_message', handleNewMessageToast);
 
         return () => {
             socket.off('conversation_updated', handleConvoUpdate);
+            socket.off('new_message', handleNewMessageToast);
         };
     }, []);
 
     return (
-        <header className="bg-surface border-b border-on-background sticky top-0 z-50">
-            <div className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 max-w-container-max mx-auto">
+        <header className="bg-surface border-b border-on-background fixed top-0 left-0 right-0 w-full z-[60] md:sticky md:top-0">
+            <div className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-[64px] max-w-container-max mx-auto">
                 <div className="flex items-center gap-4 md:gap-6">
                     <Link className="font-headline-lg text-[20px] md:text-headline-lg text-on-background tracking-tighter hover:text-primary transition-colors duration-100" to="/">CampusX</Link>
                     <div className="hidden md:flex items-center gap-4">

@@ -106,18 +106,20 @@ const Verify = () => {
             const text = await res.text();
             let data = {};
             if (text) {
-                try { data = JSON.parse(text); } catch { throw new Error("Invalid server response. The backend may be offline."); }
+                try { data = JSON.parse(text); } catch { throw new Error("Invalid server response"); }
             } else {
-                throw new Error("Empty server response.");
+                throw new Error("Empty server response");
             }
             if (data.success) {
                 toast.success('EMAIL VERIFIED ✓', { id: 'verify' });
                 setTimeout(() => navigate('/login'), 1500);
             } else {
-                toast.error(data.message || data.error || 'Verification failed', { id: 'verify' });
+                console.error("Verification Server Rejection:", data.error || data.message);
+                toast.error('We could not verify your code. Please try again.', { id: 'verify' });
             }
         } catch (error) {
-            toast.error('Verification failed.', { id: 'verify' });
+            console.error("Verification Network Exception:", error);
+            toast.error('Unable to connect to the server. Please check your connection and try again.', { id: 'verify' });
         }
     };
 
@@ -134,9 +136,9 @@ const Verify = () => {
             const text = await res.text();
             let data = {};
             if (text) {
-                try { data = JSON.parse(text); } catch { throw new Error("Invalid server response. The backend may be offline."); }
+                try { data = JSON.parse(text); } catch { throw new Error("Invalid server response"); }
             } else {
-                throw new Error("Empty server response.");
+                throw new Error("Empty server response");
             }
             if (data.success) {
                 toast.success('NEW VERIFICATION CODE SENT', { id: 'resend' });
@@ -144,14 +146,16 @@ const Verify = () => {
                 setOtp(['', '', '', '', '', '']);
                 inputRefs.current[0].focus();
             } else {
+                console.error("Resend OTP Server Rejection:", data.error || data.message);
                 if (data.code === 'EMAIL_DELIVERY_FAILED') {
-                    toast.error('EMAIL DELIVERY FAILED\nPlease check the email address or try again later.', { id: 'resend', duration: 5000 });
+                    toast.error('We could not send a verification email to that address. Please try again later.', { id: 'resend', duration: 5000 });
                 } else {
-                    toast.error(data.message || data.error || 'Failed to resend OTP.', { id: 'resend' });
+                    toast.error('Something went wrong. Please try again in a moment.', { id: 'resend' });
                 }
             }
         } catch (error) {
-            toast.error('Failed to resend OTP.', { id: 'resend' });
+            console.error("Resend OTP Network Exception:", error);
+            toast.error('Unable to connect to the server. Please check your connection and try again.', { id: 'resend' });
         }
     };
 

@@ -52,7 +52,7 @@ const Signup = () => {
             const text = await res.text();
             let data = {};
             if (text) {
-                try { data = JSON.parse(text); } catch { throw new Error("Invalid server response. The backend may be offline."); }
+                try { data = JSON.parse(text); } catch { throw new Error("Invalid server response"); }
             } else {
                 throw new Error("Empty server response.");
             }
@@ -61,10 +61,12 @@ const Signup = () => {
                 setUser(data.user);
                 navigate('/');
             } else {
-                toast.error(data.error || 'Google signup failed');
+                console.error("Google Signup Server Rejection:", data.error);
+                toast.error("We couldn't create your account. Please try again.");
             }
         } catch (err) {
-            toast.error('Google verification failed');
+            console.error('Firebase Google Auth Exception:', err);
+            toast.error('Unable to connect to the server. Please try again.');
         }
     };
 
@@ -84,7 +86,7 @@ const Signup = () => {
             const text = await res.text();
             let data = {};
             if (text) {
-                try { data = JSON.parse(text); } catch { throw new Error("Invalid server response. The backend may be offline."); }
+                try { data = JSON.parse(text); } catch { throw new Error("Invalid server response"); }
             } else {
                 throw new Error("Empty server response.");
             }
@@ -92,14 +94,16 @@ const Signup = () => {
                 toast.success(data.message, { id: 'reg' });
                 navigate(`/verify?email=${encodeURIComponent(formData.email)}`);
             } else {
+                console.error("Signup Server Rejection:", data.error || data.message);
                 if (data.code === 'EMAIL_DELIVERY_FAILED') {
-                    toast.error('EMAIL DELIVERY FAILED\nPlease check the email address or try again later.', { id: 'reg', duration: 5000 });
+                    toast.error('We could not send a verification email to that address. Please verify it and try again.', { id: 'reg', duration: 5000 });
                 } else {
-                    toast.error(data.message || data.error || 'Registration failed', { id: 'reg' });
+                    toast.error("We couldn't create your account. Please try again.", { id: 'reg' });
                 }
             }
         } catch (error) {
-            toast.error('Registration failed.', { id: 'reg' });
+            console.error('Signup Network Exception:', error);
+            toast.error('Unable to connect to the server. Please check your connection and try again.', { id: 'reg' });
         }
     };
 

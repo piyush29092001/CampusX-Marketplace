@@ -31,10 +31,13 @@ const ProductDetails = () => {
                     throw new Error(data.error || 'SERVER_ERROR');
                 }
             } catch (err) {
+                console.error("Product Load Error:", err.message);
                 if (err.message === 'Failed to fetch') {
                     setError('NETWORK_ERROR');
-                } else {
+                } else if (['AUTHENTICATION_REQUIRED', 'PRODUCT_NOT_FOUND'].includes(err.message)) {
                     setError(err.message);
+                } else {
+                    setError('SERVER_ERROR');
                 }
             } finally {
                 setLoading(false);
@@ -107,11 +110,11 @@ const ProductDetails = () => {
                 navigate('/messages?conversationId=' + data.data._id);
             } else {
                 console.error('[PING_SELLER] backend returned failure:', data.error);
-                alert(`PING_SELLER ERROR: ${data.error || 'Connection initialization failed.'}`);
+                alert("We couldn't connect you with the seller. Please try again later.");
             }
         } catch (error) {
             console.error('[PING_SELLER] exception:', error);
-            alert(`PING_SELLER ERROR: ${error.message || 'Failed to reach messaging server.'}`);
+            alert("Unable to reach the messaging server. Please check your connection and try again.");
         }
     };
 
@@ -199,9 +202,13 @@ const ProductDetails = () => {
                                                         alert('LISTING DELETED ✓');
                                                         navigate('/profile');
                                                     } else {
-                                                        alert(data.error || 'Failed to delete listing');
+                                                        console.error("Product Delete Rejection:", data.error);
+                                                        alert("We couldn't delete the listing. Please try again.");
                                                     }
-                                                } catch (err) { alert('Error communicating with server'); }
+                                                } catch (err) {
+                                                    console.error("Product Delete Exception:", err);
+                                                    alert("Unable to connect to the server. Please try again.");
+                                                }
                                             }} className="flex-1 bg-error text-on-error border-error py-2 font-label-caps uppercase hover:opacity-80 transition-opacity">
                                                 [ DELETE ]
                                             </button>

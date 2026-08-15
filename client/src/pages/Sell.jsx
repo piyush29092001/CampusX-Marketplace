@@ -96,7 +96,8 @@ const Sell = () => {
             }
 
             if (data.validProduct === false) {
-                setAiError(data.message || 'PRODUCT_ANALYSIS_FAILED: Invalid product name.');
+                console.error("AI Validation Failed:", data.message);
+                setAiError('We couldn\'t identify this product. Please enter the details manually.');
                 setAiStatus('ERROR');
             } else {
                 setAiResponse(data);
@@ -110,8 +111,8 @@ const Sell = () => {
             }
         } catch (error) {
             clearInterval(messageInterval);
-            console.error(error);
-            setAiError(error.message || 'AI_SERVICE_UNAVAILABLE - AI assistance is temporarily unavailable.');
+            console.error("AI Generation Exception:", error);
+            setAiError('We couldn\'t generate the listing details right now. Please try again or enter manually.');
             setAiStatus('ERROR');
         }
     };
@@ -155,11 +156,12 @@ const Sell = () => {
             if (data.success) {
                 navigate('/profile');
             } else {
-                alert(data.error || data.message || 'Failed to publish listing');
+                console.error("Product Publish Rejection:", data.error || data.message);
+                alert("We couldn't create your listing. Please try again.");
             }
         } catch (error) {
-            console.error(error);
-            alert('Failed to publish listing');
+            console.error("Product Publish Exception:", error);
+            alert("Unable to connect to the server. Please try again.");
         }
     };
 

@@ -64,10 +64,12 @@ const Profile = () => {
                 setMyListings(myListings.filter(item => item._id !== id));
                 setDeleteConfirmId(null);
             } else {
-                alert(data.error || 'Failed to delete');
+                console.error("Delete Listing Rejection:", data.error);
+                alert("We couldn't delete the listing. Please try again.");
             }
         } catch (error) {
-            alert('Failed to delete product');
+            console.error("Delete Listing Exception:", error);
+            alert("Unable to connect to the server. Please try again.");
         }
     };
 

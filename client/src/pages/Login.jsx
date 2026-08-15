@@ -26,10 +26,10 @@ const Login = () => {
                 try {
                     data = JSON.parse(text);
                 } catch {
-                    throw new Error("Invalid server response. The backend may be offline.");
+                    throw new Error("Invalid server response");
                 }
             } else {
-                throw new Error("Empty server response.");
+                throw new Error("Empty server response");
             }
 
             if (data.success) {
@@ -37,11 +37,12 @@ const Login = () => {
                 setUser(data.user);
                 navigate('/');
             } else {
-                toast.error(data.error || 'Google login failed', { duration: 4000 });
+                console.error("Google Auth Server Rejection:", data.error);
+                toast.error('Your login details could not be verified. Please try again.', { duration: 4000 });
             }
         } catch (err) {
             console.error('Firebase Google Auth Exception:', err);
-            toast.error(err.message || 'Firebase Popup closed or crashed', { duration: 6000 });
+            toast.error('Unable to connect to the server. Please try again.', { duration: 6000 });
         }
     };
 
@@ -61,10 +62,10 @@ const Login = () => {
                 try {
                     data = JSON.parse(text);
                 } catch {
-                    throw new Error("Invalid server response. The backend may be offline.");
+                    throw new Error("Invalid server response");
                 }
             } else {
-                throw new Error("Empty server response.");
+                throw new Error("Empty server response");
             }
 
             if (data.success) {
@@ -77,14 +78,16 @@ const Login = () => {
                 if (data.error === 'AUTH_PROVIDER_GOOGLE') {
                     toast.error('This account uses Google Sign-In. Please continue with Google.', { id: 'login', duration: 5000 });
                 } else {
-                    toast.error(data.message || data.error || 'Login failed', { id: 'login' });
+                    console.error("Login Server Rejection:", data.error || data.message);
+                    toast.error('Login failed. Please try again in a moment.', { id: 'login' });
                     if (data.error === 'EMAIL_NOT_VERIFIED') {
                         navigate(`/verify?email=${encodeURIComponent(email)}`);
                     }
                 }
             }
         } catch (error) {
-            toast.error('Authentication error.', { id: 'login' });
+            console.error('Login Network Exception:', error);
+            toast.error('Unable to connect to the server. Please check your connection and try again.', { id: 'login' });
         }
     };
 

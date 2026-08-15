@@ -7,6 +7,8 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const Message = require('./models/Message');
 const Conversation = require('./models/Conversation');
+const User = require('./models/User');
+const sendEmail = require('./utils/sendEmail');
 
 // Connect to database
 connectDB();
@@ -101,11 +103,37 @@ io.on('connection', (socket) => {
 
             console.log(`\n[RECEIVER FOUND]\nreceiverUserId: ${receiverId}\nreceiverSocketIds: ${receiverSockets.join(', ')}`);
 
-            receiverSockets.forEach(sId => {
-                console.log(`\n[EMITTING NEW MESSAGE]\nsocketId: ${sId}\nmessageId: ${newMessage._id}`);
-                io.to(sId).emit('new_message', newMessage);
-                io.to(sId).emit('conversation_updated', populatedConversation);
-            });
+            if (receiverSockets.length > 0) {
+                receiverSockets.forEach(sId => {
+                    console.log(`\n[EMITTING NEW MESSAGE]\nsocketId: ${sId}\nmessageId: ${newMessage._id}`);
+                    io.to(sId).emit('new_message', newMessage);
+                    io.to(sId).emit('conversation_updated', populatedConversation);
+                });
+            } else {
+                console.log(`\n[OFFLINE EMAIL FALLBACK]\nreceiverUserId: ${receiverId}`);
+                try {
+                    const receiverUser = await User.findById(receiverId);
+                    if (receiverUser && receiverUser.email) {
+                        const emailSubject = `New message received on CampusX`;
+                        const emailHtml = `
+                            <h2>You have a new unread message on CampusX!</h2>
+                            <p><strong>From:</strong> A user on CampusX</p>
+                            <p><strong>Message:</strong> ${type === 'image' ? '[IMAGE ATTACHMENT]' : (text || '')}</p>
+                            <p><a href="https://campus-x-marketplace-asrh.vercel.app/messages">Log in to your account</a> to reply to this message!</p>
+                        `;
+                        const emailText = `You have a new unread message on CampusX!\n\nMessage: ${type === 'image' ? '[IMAGE ATTACHMENT]' : (text || '')}\n\nLog in to reply.`;
+
+                        await sendEmail({
+                            email: receiverUser.email,
+                            subject: emailSubject,
+                            html: emailHtml,
+                            text: emailText
+                        });
+                    }
+                } catch (e) {
+                    console.error("Socket Offline Email Delivery Error:", e);
+                }
+            }
 
             // Emit success callback natively mirroring exact database structure
             socket.emit('message_sent', newMessage);
