@@ -1,5 +1,5 @@
 const express = require('express');
-const { startConversation, getConversations, getMessages, deleteConversation, deleteMessage } = require('../controllers/messageController');
+const { startConversation, sendMessage, getConversations, getMessages, deleteConversation, deleteMessage } = require('../controllers/messageController');
 const { protect } = require('../middleware/auth');
 
 const router = express.Router();
