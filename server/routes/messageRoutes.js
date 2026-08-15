@@ -8,6 +8,7 @@ const router = express.Router();
 router.use(protect);
 
 router.post('/start', startConversation);
+router.post('/send', sendMessage);
 router.get('/conversations', getConversations);
 router.get('/:conversationId', getMessages);
 router.delete('/conversations/:conversationId', deleteConversation);

@@ -56,93 +56,10 @@ io.on('connection', (socket) => {
     io.emit('user_online', userId);
 
     socket.on('send_message', async (data) => {
-        try {
-            const { conversationId, receiverId, type, text, imageUrl, replyTo, productId, productName } = data;
-            const senderId = socket.user.id; // Guarantee authenticity securely
-
-            console.log(`\n[SEND MESSAGE RECEIVED]\nsender: ${senderId}\nconversationId: ${conversationId}`);
-
-            // Verify Conversation array Map logic natively
-            const conversation = await Conversation.findById(conversationId);
-            if (!conversation || !conversation.participants.includes(senderId)) return;
-
-            const newMessage = await Message.create({
-                conversation: conversationId,
-                sender: senderId,
-                receiver: receiverId,
-                type: type || 'text',
-                text: text || '',
-                imageUrl: imageUrl || '',
-                replyTo: replyTo || null,
-                productId: productId || null,
-                productName: productName || null,
-                status: 'sent'
-            });
-
-            console.log(`\n[MESSAGE SAVED]\nmessageId: ${newMessage._id}\nconversationId: ${conversationId}\nsender: ${senderId}`);
-
-            // Update Conversation Map Metadata natively
-            conversation.lastMessage = type === 'image' ? '[IMAGE]' : text;
-            conversation.lastMessageAt = Date.now();
-
-            // DO NOT touch conversation.hiddenFor here.
-            // If a user deleted this thread, sending new messages into it
-            // does NOT resurrect it. New contacts create NEW threads via startConversation.
-
-            // Unread counts Map injection
-            const currentUnread = conversation.get(`unreadCounts.${receiverId}`) || 0;
-            conversation.set(`unreadCounts.${receiverId}`, currentUnread + 1);
-            await conversation.save();
-
-            const populatedConversation = await Conversation.findById(conversationId)
-                .populate('participants', 'name avatar isVerified')
-                .populate('product', 'title price images status');
-
-            // Emit to receiver natively across ALL their active sockets
-            const receiverSockets = getReceiverSockets(receiverId);
-
-            console.log(`\n[RECEIVER FOUND]\nreceiverUserId: ${receiverId}\nreceiverSocketIds: ${receiverSockets.join(', ')}`);
-
-            if (receiverSockets.length > 0) {
-                receiverSockets.forEach(sId => {
-                    console.log(`\n[EMITTING NEW MESSAGE]\nsocketId: ${sId}\nmessageId: ${newMessage._id}`);
-                    io.to(sId).emit('new_message', newMessage);
-                    io.to(sId).emit('conversation_updated', populatedConversation);
-                });
-            } else {
-                console.log(`\n[OFFLINE EMAIL FALLBACK]\nreceiverUserId: ${receiverId}`);
-                try {
-                    const receiverUser = await User.findById(receiverId);
-                    if (receiverUser && receiverUser.email) {
-                        const emailSubject = `New message received on CampusX`;
-                        const emailHtml = `
-                            <h2>You have a new unread message on CampusX!</h2>
-                            <p><strong>From:</strong> A user on CampusX</p>
-                            <p><strong>Message:</strong> ${type === 'image' ? '[IMAGE ATTACHMENT]' : (text || '')}</p>
-                            <p><a href="https://campus-x-marketplace-asrh.vercel.app/messages">Log in to your account</a> to reply to this message!</p>
-                        `;
-                        const emailText = `You have a new unread message on CampusX!\n\nMessage: ${type === 'image' ? '[IMAGE ATTACHMENT]' : (text || '')}\n\nLog in to reply.`;
-
-                        await sendEmail({
-                            email: receiverUser.email,
-                            subject: emailSubject,
-                            html: emailHtml,
-                            text: emailText
-                        });
-                    }
-                } catch (e) {
-                    console.error("Socket Offline Email Delivery Error:", e);
-                }
-            }
-
-            // Emit success callback natively mirroring exact database structure
-            socket.emit('message_sent', newMessage);
-            socket.emit('conversation_updated', populatedConversation);
-
-        } catch (err) {
-            console.error("Socket Message Execution Error:", err);
-            socket.emit('message_failed', { error: 'Failed to process message' });
-        }
+        // [DEPRECATED ON VERCEL]
+        // Message persistence and Email Fallback have been migrated to the HTTP POST /api/messages/send controller.
+        // This listener is preserved ONLY to forward the local socket UI event if a client insists on emitting.
+        console.log(`\n[SOCKET SEND_MESSAGE SKIPPED IN FAVOR OF HTTP]`);
     });
 
     socket.on('message_delivered', async ({ messageId, conversationId, senderId }) => {

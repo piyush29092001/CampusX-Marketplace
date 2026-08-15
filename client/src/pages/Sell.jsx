@@ -277,11 +277,11 @@ const Sell = () => {
                                 <h3 className="text-base font-bold uppercase text-[#93000a]">ANALYSIS_FAILED</h3>
                             </div>
                             <p className="text-sm font-bold text-[#93000a] leading-relaxed">{aiError}</p>
-                            <div className="flex gap-4 mt-2">
-                                <button onClick={() => setStep(1)} className="border border-[#93000a] bg-white text-[#93000a] px-6 py-3 font-bold text-xs uppercase tracking-widest hover:bg-[#93000a] hover:text-white transition-colors">
+                            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-2">
+                                <button onClick={() => setStep(1)} className="w-full sm:w-auto border border-[#93000a] bg-white text-[#93000a] px-6 py-3 font-bold text-xs uppercase tracking-widest hover:bg-[#93000a] hover:text-white transition-colors">
                                     TRY_AGAIN
                                 </button>
-                                <button onClick={handleManualFallback} className="border border-[#93000a] bg-[#93000a] text-white px-6 py-3 font-bold text-xs uppercase tracking-widest hover:bg-[#1b1b24] hover:border-[#1b1b24] transition-colors shadow-[2px_2px_0_#93000a] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[3px_3px_0_#93000a]">
+                                <button onClick={handleManualFallback} className="w-full sm:w-auto border border-[#93000a] bg-[#93000a] text-white px-6 py-3 font-bold text-xs uppercase tracking-widest hover:bg-[#1b1b24] hover:border-[#1b1b24] transition-colors shadow-[2px_2px_0_#93000a] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[3px_3px_0_#93000a]">
                                     ENTER_MANUALLY
                                 </button>
                             </div>

@@ -163,17 +163,9 @@ const Messages = () => {
         };
 
         const handleMessageSent = (msg) => {
-            setMessages(prev => {
-                let replaced = false;
-                return prev.map(m => {
-                    if (m.optimistic && !replaced && (m.text === msg.text || m.imageUrl === msg.imageUrl)) {
-                        replaced = true;
-                        return { ...msg };
-                    }
-                    return m;
-                });
-            });
-            setTimeout(() => scrollToBottom(), 50);
+            // [DEPRECATION NOTICE]
+            // We are using HTTP POST for message saving now, which handles its own optimistic rendering replacement.
+            // Leaving this socket hook empty to prevent double-firing replacement logic if the socket works.
         };
 
         const handleConversationUpdated = (updatedConvo) => {
@@ -294,10 +286,10 @@ const Messages = () => {
         }, 1500);
     };
 
-    const handleSendMessage = (e) => {
+    const handleSendMessage = async (e) => {
         e?.preventDefault();
-        const socket = getSocket();
-        if ((!text.trim() && !imagePreview) || !activeChat || !socket) return;
+        const socket = getSocket(); // We still get the socket to emit tracking stuff if possible
+        if ((!text.trim() && !imagePreview) || !activeChat) return;
 
         const receiver = getOtherParticipant(activeChat.participants);
         if (!receiver) return;
@@ -313,10 +305,10 @@ const Messages = () => {
             productName: activeChat.product?.title || 'GENERAL'
         };
 
-        socket.emit('send_message', msgPayload);
+        const optimisticMsgId = Date.now() + Math.random().toString();
 
         setMessages(prev => [...prev, {
-            _id: Date.now() + Math.random().toString(),
+            _id: optimisticMsgId,
             conversation: activeChat._id,
             sender: myId,
             receiver: receiver._id,
@@ -329,11 +321,48 @@ const Messages = () => {
             optimistic: true
         }]);
 
+        const currentText = text;
+        const currentImage = imagePreview;
+
         setText('');
         setImagePreview(null);
         setShowEmojiPicker(false);
         setReplyingTo(null);
         setTimeout(() => scrollToBottom(), 50);
+
+        try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/messages/send`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(msgPayload)
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                // Swap the Fake Optimistic string with Real Document
+                setMessages(prev => prev.map(m => m._id === optimisticMsgId ? data.data : m));
+
+                // Keep the Realtime Conversation Banner array perfectly updated natively
+                if (data.conversation) {
+                    setConversations(prev => {
+                        const map = prev.map(c => c._id === data.conversation._id ? { ...c, ...data.conversation } : c);
+                        if (!prev.find(c => c._id === data.conversation._id)) map.push(data.conversation);
+                        return map.sort((a, b) => new Date(b.lastMessageAt) - new Date(a.lastMessageAt));
+                    });
+                }
+            } else {
+                console.error("HTTP Send Failure:", data.error);
+                // Flag optimistic as failed
+                setMessages(prev => prev.map(m => m._id === optimisticMsgId ? { ...m, status: 'failed' } : m));
+            }
+        } catch (fetchErr) {
+            console.error("HTTP Send Exception:", fetchErr);
+            setMessages(prev => prev.map(m => m._id === optimisticMsgId ? { ...m, status: 'failed' } : m));
+        }
     };
 
     const handleDeleteConversation = async () => {
@@ -392,6 +421,7 @@ const Messages = () => {
     };
 
     const renderStatus = (msg) => {
+        if (msg.status === 'failed') return 'FAIL';
         if (msg.optimistic) return 'SENDING...';
         if (msg.status === 'read' || msg.read) return '✓✓';
         if (msg.status === 'delivered') return '✓✓';

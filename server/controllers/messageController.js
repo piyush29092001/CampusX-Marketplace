@@ -1,5 +1,7 @@
 const Conversation = require('../models/Conversation');
 const Message = require('../models/Message');
+const User = require('../models/User');
+const sendEmail = require('../utils/sendEmail');
 
 // @desc    Start or Get Conversation by Product ID & Seller
 // @route   POST /api/messages/start
@@ -252,5 +254,88 @@ exports.deleteMessage = async (req, res, next) => {
         res.status(200).json({ success: true, data: { _id: message._id } });
     } catch (error) {
         res.status(500).json({ success: false, error: 'Failed to delete message' });
+    }
+};
+
+// @desc    Send a message via HTTP
+// @route   POST /api/messages/send
+// @access  Private
+exports.sendMessage = async (req, res, next) => {
+    try {
+        const { conversationId, receiverId, type, text, imageUrl, replyTo, productId, productName } = req.body;
+        const senderId = req.user.id;
+
+        const conversation = await Conversation.findById(conversationId);
+        if (!conversation || !conversation.participants.includes(senderId)) {
+            return res.status(403).json({ success: false, error: 'Unauthorized to send to this conversation' });
+        }
+
+        const newMessage = await Message.create({
+            conversation: conversationId,
+            sender: senderId,
+            receiver: receiverId,
+            type: type || 'text',
+            text: text || '',
+            imageUrl: imageUrl || '',
+            replyTo: replyTo || null,
+            productId: productId || null,
+            productName: productName || null,
+            status: 'sent'
+        });
+
+        conversation.lastMessage = type === 'image' ? '[IMAGE]' : text;
+        conversation.lastMessageAt = Date.now();
+
+        const currentUnread = conversation.get(`unreadCounts.${receiverId}`) || 0;
+        conversation.set(`unreadCounts.${receiverId}`, currentUnread + 1);
+        await conversation.save();
+
+        const populatedConversation = await Conversation.findById(conversationId)
+            .populate('participants', 'name avatar isVerified')
+            .populate('product', 'title price images status');
+
+        // Progressive Enhancement: Emits to active WebSockets natively if they actually exist on this node instance
+        try {
+            const io = req.app.get('io');
+            const onlineUsers = req.app.get('onlineUsers');
+
+            if (io && onlineUsers) {
+                const receiverSockets = onlineUsers.has(receiverId.toString()) ? Array.from(onlineUsers.get(receiverId.toString())) : [];
+
+                if (receiverSockets.length > 0) {
+                    receiverSockets.forEach(sId => {
+                        io.to(sId).emit('new_message', newMessage);
+                        io.to(sId).emit('conversation_updated', populatedConversation);
+                    });
+                } else {
+                    // Start offline email fallback since no local active sockets exist for receiver
+                    const receiverUser = await User.findById(receiverId);
+                    if (receiverUser && receiverUser.email) {
+                        const emailSubject = `New message received on CampusX`;
+                        const emailHtml = `
+                            <h2>You have a new unread message on CampusX!</h2>
+                            <p><strong>From:</strong> A user on CampusX</p>
+                            <p><strong>Message:</strong> ${type === 'image' ? '[IMAGE ATTACHMENT]' : (text || '')}</p>
+                            <p><a href="https://campus-x-marketplace-asrh.vercel.app/messages">Log in to your account</a> to reply to this message!</p>
+                        `;
+                        const emailText = `You have a new unread message on CampusX!\n\nMessage: ${type === 'image' ? '[IMAGE ATTACHMENT]' : (text || '')}\n\nLog in to reply.`;
+
+                        sendEmail({
+                            email: receiverUser.email,
+                            subject: emailSubject,
+                            html: emailHtml,
+                            text: emailText
+                        }).catch(e => console.error("Offline Email Delivery Error in sendMessage:", e));
+                    }
+                }
+            }
+        } catch (socketError) {
+            console.error('Socket emission failed gracefully via sendMessage HTTP endpoint:', socketError);
+        }
+
+        res.status(200).json({ success: true, data: newMessage, conversation: populatedConversation });
+    } catch (error) {
+        console.error('[sendMessage] error:', error);
+        res.status(500).json({ success: false, error: 'Failed to send message' });
     }
 };
